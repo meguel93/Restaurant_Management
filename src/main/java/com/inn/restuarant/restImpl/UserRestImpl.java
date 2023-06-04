@@ -1,0 +1,32 @@
+package com.inn.restuarant.restImpl;
+
+import com.inn.restuarant.constants.RestaurantConstants;
+import com.inn.restuarant.rest.UserRest;
+import com.inn.restuarant.service.UserService;
+import com.inn.restuarant.utils.RestaurantUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
+
+@RestController
+public class UserRestImpl implements UserRest {
+
+    @Autowired
+    UserService userService;
+
+    @Override
+    public ResponseEntity<String> signUp(Map<String, String> requestMap) {
+
+        try {
+            return userService.signUp(requestMap);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return RestaurantUtil.getResponseEntity(RestaurantConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
